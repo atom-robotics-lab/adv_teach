@@ -39,7 +39,7 @@ while (cap.isOpened()):
         for face_loc, name in zip(face_locations, face_names):
             y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]
 
-            sub = (frame.shape[1]/2) - int((x1 + x2)/2)
+            sub = (int(frame.shape[1]/2)) - int((x1 + x2)/2)
             arduino.write(bytes(sub, 'utf-8'))
             time.sleep(0.05)
 
