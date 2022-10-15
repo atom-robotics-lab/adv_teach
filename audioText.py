@@ -19,7 +19,7 @@ while (1):
             MyText = MyText.lower()
             print(MyText)
             mytext = mytext + ' ' + str(MyText)
-            with open("sample.txt", "a") as file_object:
+            with open("sample.html", "a") as file_object:
                 file_object.write(str(MyText) + '.')
             if MyText == 'lecture finished':
                 client = nlpcloud.Client("bart-large-cnn", "Your_Token")

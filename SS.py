@@ -1,6 +1,10 @@
 import cv2
 import mediapipe as mp
 from math import hypot
+from PIL import Image
+import numpy as np
+
+
 
 cap = cv2.VideoCapture(0)
 
@@ -33,13 +37,18 @@ while True:
         my = int((y1 + y2) / 2)
         d = int((hypot(x2 - x1, y2 - y1)/30))
         print(d)
+
         if d != 0:
             no += 1
             ROI = img[int((my - 100)/d):my + int((my - 100)/d), mx: mx + d * (mx + 100)]
-            cv2.imwrite('ROZ' + str(no) + '.png', ROI)
+            cv2.imwrite('ROZ'  + '.png', ROI)
 
-        filez = 'ROZ' + str(no) + '.png'
+        filez = 'ROZ' + '.png'
         if d == 0:
+            imglist=[]
+            imglist.append(ROI)
+            
+
             while c < 1:
                 with open("sample.html", "a") as file_object:
                     file_object.write(f'<img src = "{filez}"></img>')
