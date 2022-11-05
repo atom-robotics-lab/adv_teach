@@ -16,22 +16,19 @@ while (1):
             r.adjust_for_ambient_noise(source2, duration=0.2)
             audio2 = r.listen(source2)
             MyText = r.recognize_google(audio2)
-            if MyText == 'start':
-                print("start")
-                MyText = MyText.lower()
-                print(MyText)
-                mytext = mytext + ' ' + str(MyText)
-                with open("sample.html", "a") as file_object:
-                    file_object.write(str(MyText) + '.')
-                if MyText == 'lecture finished':
-                    client = nlpcloud.Client("bart-large-cnn", "488cc850b1f7b2ffec7c16bcaa073b65e07a3eda")
-                    print("...Summarizing...")
-                    r = client.summarization(f"""{mytext}""")
-                    print(r)
-                    with open("sz.txt", "a") as file_object:        
-                        file_object.write(r['summary_text'])
-
-                        break
+            MyText = MyText.lower()
+            print(MyText)
+            mytext = mytext + ' ' + str(MyText)
+            with open("sample.html", "a") as file_object:
+                file_object.write(str(MyText) + '.')
+            if MyText == 'lecture finished':
+                client = nlpcloud.Client("bart-large-cnn", "488cc850b1f7b2ffec7c16bcaa073b65e07a3eda")
+                print("...Summarizing...")
+                r = client.summarization(f"""{mytext}""")
+                print(r)
+                with open("sz.txt", "a") as file_object:
+                    file_object.write(r['summary_text'])
+                    break
 
     except sr.RequestError as e:
         print("Could not request results; {0}".format(e))
