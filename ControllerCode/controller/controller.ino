@@ -18,7 +18,7 @@ void loop() {
  if (Serial.available())
  {
   int error = Serial.readString().toInt();
-  myservo.write(90 - pos);
+  myservo.write(90 - (error/50));
   delay(15);
   }
 }
