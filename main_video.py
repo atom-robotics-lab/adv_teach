@@ -2,6 +2,7 @@ import cv2
 from simple_facerec import SimpleFacerec
 from line import Line_detection
 import serial
+from serial import Serial
 import time
 
 # Encode faces from a folder
@@ -21,7 +22,7 @@ if (cap.isOpened() == False):
 out = cv2.VideoWriter('RecordedVideo' + file_name + '.avi', -1, 20.0, (640,480))
 
 # start a serial port from arduino
-arduino = serial.Serial(port='COM4', baudrate=115200, timeout=.1)
+arduino = Serial(port='/dev/ttyUSB0', baudrate=115200, timeout=.1)
 
 
 while (cap.isOpened()):
