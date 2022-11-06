@@ -2,6 +2,8 @@ import speech_recognition as sr
 import pyttsx3
 import nlpcloud
 from time import sleep
+import re
+
 
 class Audio_Handler:
 
@@ -34,14 +36,15 @@ class Audio_Handler:
         self.text_file = open("sample.html", "w")
         while (1):
             try:
-                with sr.Microphone() as source2:
+                #with sr.Microphone() as source2:
+                with sr.AudioFile('test.wav') as source2:
                 
-                    self.recognizer.adjust_for_ambient_noise(source2, duration=0.2)
+                    #self.recognizer.adjust_for_ambient_noise(source2, duration=0.2)
                     audio2 = self.recognizer.listen(source2)
 
-                    if i == 0:
-                        self.StartTeachIT()
-                    i = i+1
+                    #if i == 0:
+                    #    self.StartTeachIT()
+                    #i = i+1
                         
                     MyText = self.recognizer.recognize_google(audio2)
 
@@ -49,16 +52,16 @@ class Audio_Handler:
                     print(MyText)
                     self.speech_text = self.speech_text + ' ' + MyText
 
-                    if MyText == 'finish lecture.':
-                        self.SpeakText(" Lecture Finished ")
-                        print("************************************\n")
+                    if 'lecture finished.' in self.speech_text:
+                        #self.SpeakText(" Lecture Finished ")
+                        print("\n************************************\n")
                         print("Lecture Finished !!!\n")
                         print("************************************\n")
 
                         self.text_file.write(self.speech_text)
                         self.text_file.close()
 
-                        self.SpeakText(" Summarizing Text ")
+                        #self.SpeakText(" Summarizing Text ")
                         print("...Summarizing Text...\n")
 
                         self.Summarize_text(self.speech_text)
@@ -72,11 +75,15 @@ class Audio_Handler:
     def Summarize_text(self, text):
         client = nlpcloud.Client("bart-large-cnn", "5a765a6d4986fabc780213295cfdaad94d9f313e")
         summarrized_text = client.summarization(f"""{text}""")
-        self.SpeakText(" Here's the Summarized Text ")
-        print("<-------Summarized Text-------->")
-        print(summarrized_text)
+        #self.SpeakText(" Here's the Summarized Text ")
+        print("<-------Summarized Text-------->\n")
+        pat = ('(?<!Dr)(?<!Esq)\. +(?=[A-Z])')
+        final_text = re.sub(pat,'.\n\n--> ',str(summarrized_text))
+        final_text = final_text.replace("{'summary_text': '", "")
+        final_text = final_text.replace("'}", "")
+        print("--> " + final_text)
         self.summarized_text_file = open("summarized_text.txt", "w")
-        self.summarized_text_file.write(str(summarrized_text))
+        self.summarized_text_file.write(str(final_text))
 
 
 Handler = Audio_Handler()
