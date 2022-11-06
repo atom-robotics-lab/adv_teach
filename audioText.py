@@ -21,13 +21,16 @@ class Audio_Handler:
     def StartTeachIT(self):
         print("\n \n \n ")
         print("Hi, Welcome to Teach it. Your Personal Teaching assistant \n ")
-        print("- Please Say Start Lecture to start recording \n ")
-        print("- Please Say Finish Lecture to stop recording \n ")
+        #print("- Please Say Start Lecture to start recording \n ")
+        #print("- Please Say Finish Lecture to stop recording \n ")
+        print("Recording from File")
         self.SpeakText("Hi, Welcome to Teach it. Your Personal Teaching assistant")
         sleep(0.7)
-        self.SpeakText("Please Say Start Lecture to start recording")
-        sleep(0.7)
-        self.SpeakText("Please Say Finish Lecture to stop recording")
+        #self.SpeakText("Please Say Start Lecture to start recording")
+        #sleep(0.7)
+        #self.SpeakText("Please Say Finish Lecture to stop recording")
+        self.SpeakText("Please wait, Recording From File")
+
 
     def speech_to_text(self):
 
@@ -42,9 +45,9 @@ class Audio_Handler:
                     #self.recognizer.adjust_for_ambient_noise(source2, duration=0.2)
                     audio2 = self.recognizer.listen(source2)
 
-                    #if i == 0:
-                    #    self.StartTeachIT()
-                    #i = i+1
+                    if i == 0:
+                        self.StartTeachIT()
+                    i = i+1
                         
                     MyText = self.recognizer.recognize_google(audio2)
 
@@ -53,7 +56,7 @@ class Audio_Handler:
                     self.speech_text = self.speech_text + ' ' + MyText
 
                     if 'lecture finished.' in self.speech_text:
-                        #self.SpeakText(" Lecture Finished ")
+                        self.SpeakText(" Lecture Finished ")
                         print("\n************************************\n")
                         print("Lecture Finished !!!\n")
                         print("************************************\n")
@@ -61,7 +64,7 @@ class Audio_Handler:
                         self.text_file.write(self.speech_text)
                         self.text_file.close()
 
-                        #self.SpeakText(" Summarizing Text ")
+                        self.SpeakText(" Summarizing Text ")
                         print("...Summarizing Text...\n")
 
                         self.Summarize_text(self.speech_text)
@@ -75,7 +78,7 @@ class Audio_Handler:
     def Summarize_text(self, text):
         client = nlpcloud.Client("bart-large-cnn", "5a765a6d4986fabc780213295cfdaad94d9f313e")
         summarrized_text = client.summarization(f"""{text}""")
-        #self.SpeakText(" Here's the Summarized Text ")
+        self.SpeakText(" Here's the Summarized Text ")
         print("<-------Summarized Text-------->\n")
         pat = ('(?<!Dr)(?<!Esq)\. +(?=[A-Z])')
         final_text = re.sub(pat,'.\n\n--> ',str(summarrized_text))

@@ -13,7 +13,7 @@ ld = Line_detection()
 sfr.load_encoding_images("training images/")
 
 
-file_name = input('Please enter the name of the Lecture to be recorded')
+file_name = input('Please enter the name of the Lecture to be recorded:     ')
 
 # Load Camera
 cap = cv2.VideoCapture(0)
@@ -25,11 +25,7 @@ if (cap.isOpened() == False):
 out = cv2.VideoWriter('RecordedVideo' + file_name + '.avi', -1, 20.0, (640,480))
 
 # start a serial port from arduino
-<<<<<<< HEAD
-# arduino = serial.Serial(port=' /dev/ttyUSB0 ', baudrate=115200, timeout=.1)
-=======
 # arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=115200, timeout=.1)
->>>>>>> new
 
 port ="/dev/ttyUSB0"
 pin=9
