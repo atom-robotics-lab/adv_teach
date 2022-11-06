@@ -16,7 +16,7 @@ sfr.load_encoding_images("training images/")
 file_name = input('Please enter the name of the Lecture to be recorded')
 
 # Load Camera
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 cap.set(cv2.CAP_PROP_FPS, 60)
 
 if (cap.isOpened() == False): 
@@ -31,7 +31,7 @@ port ="/dev/ttyUSB0"
 pin=9
 board =Arduino(port)
 board.digital[pin].mode=SERVO
-# board.digital[pin].write(90)
+board.digital[pin].write(90)
 
 angle=0
 while (cap.isOpened()):
@@ -50,7 +50,7 @@ while (cap.isOpened()):
             y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]
             # board.digital[pin].write(sub)
 
-            sub = ((int(frame.shape[1]/2)) - int((x1 + x2)/2))/2
+            sub = -(((int(frame.shape[1]/2)) - int((x1 + x2)/2))/2)
             angle=int(90-sub)
             # board.digital[pin].write(160)
             print(angle)
