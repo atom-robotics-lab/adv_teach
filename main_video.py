@@ -13,7 +13,7 @@ ld = Line_detection()
 sfr.load_encoding_images("training images/")
 
 
-file_name = input('Please enter the name of the Lecture to be recorded')
+file_name = input('Please enter the name of the Lecture to be recorded:     ')
 
 # Load Camera
 cap = cv2.VideoCapture(0)
