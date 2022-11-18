@@ -6,7 +6,7 @@ from line import Line_detection
 import time
 from time import sleep
 
-from pyfirmata import Arduino ,SERVO ,util
+#from pyfirmata import Arduino ,SERVO ,util
 
 # Encode faces from a folder
 sfr = SimpleFacerec()
@@ -30,11 +30,11 @@ out = cv2.VideoWriter('RecordedVideo' + file_name + '.avi', -1, 20.0, (640,480))
 # start a serial port from arduino
 # arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=115200, timeout=.1)
 
-port ="/dev/ttyUSB0"
-pin=9
-board =Arduino(port)
-board.digital[pin].mode=SERVO
-board.digital[pin].write(90)
+# port ="/dev/ttyUSB0"
+# pin=9
+# board =Arduino(port)
+# board.digital[pin].mode=SERVO
+# board.digital[pin].write(90)
 
 angle=90
 while (cap.isOpened()):
@@ -64,7 +64,7 @@ while (cap.isOpened()):
                     angle = angle + 3
             # board.digital[pin].write(160)
             print(angle)
-            board.digital[pin].write(angle)
+            #board.digital[pin].write(angle)
             # arduino.write(bytes(sub, 'utf-8'))
             time.sleep(0.05)
 
