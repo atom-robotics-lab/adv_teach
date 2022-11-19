@@ -19,7 +19,7 @@ file_name = input('Please enter the name of the Lecture to be recorded:     ')
 # Load Camera
 # cap = cv2.VideoCapture('rtsp://192.168.29.184:4747/video')
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture("https://192.168.164.121:8080/video")
 # cap.set(cv2.CAP_PROP_FPS, 60)
 
 if (cap.isOpened() == False): 
