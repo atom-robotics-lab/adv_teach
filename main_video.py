@@ -6,7 +6,7 @@ from line import Line_detection
 import time
 from time import sleep
 
-#from pyfirmata import Arduino ,SERVO ,util
+from pyfirmata import Arduino ,SERVO ,util
 
 # Encode faces from a folder
 sfr = SimpleFacerec()
@@ -14,27 +14,27 @@ ld = Line_detection()
 sfr.load_encoding_images("training images/")
 
 
-file_name = input('Please enter the name of the Lecture to be recorded:     ')
+# file_name = input('Please enter the name of the Lecture to be recorded:     ')
 
 # Load Camera
 # cap = cv2.VideoCapture('rtsp://192.168.29.184:4747/video')
 
-cap = cv2.VideoCapture("https://192.168.164.121:8080/video")
+cap = cv2.VideoCapture(0)
 # cap.set(cv2.CAP_PROP_FPS, 60)
 
 if (cap.isOpened() == False): 
     print("Error reading from camera source")
 
-out = cv2.VideoWriter('RecordedVideo' + file_name + '.avi', -1, 20.0, (640,480))
+# out = cv2.VideoWriter('RecordedVideo' + file_name + '.avi', -1, 20.0, (640,480))
 
 # start a serial port from arduino
 # arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=115200, timeout=.1)
 
-# port ="/dev/ttyUSB0"
-# pin=9
-# board =Arduino(port)
-# board.digital[pin].mode=SERVO
-# board.digital[pin].write(90)
+port ="/dev/ttyUSB0"
+pin=9
+board =Arduino(port)
+board.digital[pin].mode=SERVO
+board.digital[pin].write(90)
 
 angle=90
 while (cap.isOpened()):
@@ -46,7 +46,7 @@ while (cap.isOpened()):
         # frame = cv2.flip(frame,0)
 
         # write the flipped frame
-        out.write(frame)
+        # out.write(frame)
 
         # Detect Faces
         face_locations, face_names = sfr.detect_known_faces(frame)
@@ -58,13 +58,13 @@ while (cap.isOpened()):
             #angle=int(90-sub)
             if sub > 7:
                 if angle > 5:
-                    angle = angle - 3
+                    angle =angle - 3
             if sub < -7:
                 if angle < 175:
                     angle = angle + 3
             # board.digital[pin].write(160)
             print(angle)
-            #board.digital[pin].write(angle)
+            board.digital[pin].write(angle)
             # arduino.write(bytes(sub, 'utf-8'))
             time.sleep(0.05)
 
